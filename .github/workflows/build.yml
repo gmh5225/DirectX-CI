@@ -15,9 +15,7 @@ jobs:
           
     - name: Install DXSDK
       run: |
-        git clone https://github.com/gmh5225/DX_SDK ${{ github.workspace }}\DX_SDK
-        Write-Host "DX_SDK 1: ${{ github.workspace }}\DX_SDK"
-        dir ${{ github.workspace }}\DX_SDK\Include
+        git clone https://github.com/gmh5225/DX_SDK D:/a/DX_SDK
       shell: powershell
       
     - name: Checkout Repo
@@ -25,7 +23,7 @@ jobs:
       
     - name: Build
       run: |
-        cmake -B build -DDXSDK_DIR=${{ github.workspace }}\DX_SDK -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
+        cmake -B build -DDXSDK_DIR=D:/a/DX_SDK -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
         cmake --build build --config ${{ env.BUILD_TYPE }} --parallel
       shell: powershell
       
