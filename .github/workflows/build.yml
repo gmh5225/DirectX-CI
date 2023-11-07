@@ -12,20 +12,30 @@ jobs:
     env:
       BUILD_TYPE: Release
     steps:
+    - name: Install DirectX SDK
+      shell: powershell
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: |
+          choco install directx-sdk -y
+          Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
+    - name: Cache DirectX SDK
+      uses: actions/cache@v3
+      with:
+          path: DXSDK_Jun10.exe
+          key: ${{ runner.os }}-DXSDK_Jun10
+    - name: Download DirectX SDK
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: |
+          Invoke-WebRequest 'https://download.microsoft.com/download/a/e/7/ae743f1f-632b-4809-87a9-aa1bb3458e31/DXSDK_Jun10.exe' -OutFile DXSDK_Jun10.exe
+    
+    - name: Install DXSDK
+      run: cmd.exe /c start /wait .\DXSDK_Jun10.exe /U /O /F /S /P "${{ github.workspace }}\DX_SDK"
+    
     - name: Checkout Repo
       uses: actions/checkout@v3
-    - name: Compile with gcc 10 on ubuntu
-      if: ${{ matrix.os == 'ubuntu-20.04' }}
-      run: |
-         echo "CC=gcc-10" >> $GITHUB_ENV
-         echo "CXX=g++-10" >> $GITHUB_ENV
+      
     - name: Build
       run: |
         cmake -B build -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
         cmake --build build --config ${{ env.BUILD_TYPE }} --parallel
         
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: xxx-${{ matrix.os }}
-        path: build/Release
