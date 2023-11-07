@@ -30,7 +30,10 @@ jobs:
     
     - name: Install DXSDK
       run: cmd.exe /c start /wait .\DXSDK_Jun10.exe /U /O /F /S /P "${{ github.workspace }}\DX_SDK"
-    
+
+    - name: List DXSDK files
+      run: dir /b "${{ github.workspace }}\DX_SDK"
+      
     - name: Checkout Repo
       uses: actions/checkout@v3
       
