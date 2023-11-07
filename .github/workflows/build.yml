@@ -15,15 +15,14 @@ jobs:
           
     - name: Install DXSDK
       run: |
-        set DXSDK_PATH="${{ github.workspace }}\DX_SDK"
-        git clone https://github.com/gmh5225/DX_SDK %DXSDK_PATH%
+        git clone https://github.com/gmh5225/DX_SDK ${{ github.workspace }}\DX_SDK
         
     - name: Checkout Repo
       uses: actions/checkout@v3
       
     - name: Build
       run: |
-        cmake -B build -DDXSDK_DIR=%DXSDK_PATH% -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
+        cmake -B build -DDXSDK_DIR=${{ github.workspace }}\DX_SDK -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
         cmake --build build --config ${{ env.BUILD_TYPE }} --parallel
         
     - name: Upload artifacts
