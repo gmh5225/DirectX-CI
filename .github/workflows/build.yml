@@ -17,6 +17,7 @@ jobs:
       run: |
         git clone https://github.com/gmh5225/DX_SDK ${{ github.workspace }}\DX_SDK
         Write-Host "DX_SDK 1: ${{ github.workspace }}\DX_SDK"
+        dir ${{ github.workspace }}\DX_SDK
       shell: powershell
       
     - name: Checkout Repo
