@@ -16,7 +16,9 @@ jobs:
     - name: Install DXSDK
       run: |
         git clone https://github.com/gmh5225/DX_SDK ${{ github.workspace }}\DX_SDK
-        
+        Write-Host "DX_SDK 1: ${{ github.workspace }}\DX_SDK"
+      shell: powershell
+      
     - name: Checkout Repo
       uses: actions/checkout@v3
       
@@ -24,7 +26,8 @@ jobs:
       run: |
         cmake -B build -DDXSDK_DIR=${{ github.workspace }}\DX_SDK -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
         cmake --build build --config ${{ env.BUILD_TYPE }} --parallel
-        
+      shell: powershell
+      
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
