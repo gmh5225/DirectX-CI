@@ -38,7 +38,11 @@ jobs:
           Invoke-WebRequest 'https://download.microsoft.com/download/a/e/7/ae743f1f-632b-4809-87a9-aa1bb3458e31/DXSDK_Jun10.exe' -OutFile DXSDK_Jun10.exe
       
     - name: Install DXSDK
-      run: cmd.exe /c start /wait .\DXSDK_Jun10.exe /U /O /F /S /P "${{ github.workspace }}\\DX_SDK"
+      run: |
+        $installPath = "${{ github.workspace }}\\DX_SDK"
+        New-Item -ItemType Directory -Path $installPath -Force | Out-Null
+        $exePath = Join-Path $installPath "DXSDK_Jun10.exe"
+        Start-Process -FilePath $exePath -ArgumentList '/silent' -Wait
       shell: powershell
       
     - name: List DXSDK files
