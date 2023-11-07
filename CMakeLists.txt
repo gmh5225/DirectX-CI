@@ -35,6 +35,8 @@ if (NOT DXSDK_INCLUDE_DIR)
 else()
     message(STATUS "DirectX SDK found at: ${DXSDK_INCLUDE_DIR}")
 endif()
+link_directories("${DXSDK_DIR}Lib\\x64")
+include_directories("${DXSDK_DIR}Include")
 
 set(hello_world_SOURCES
 	"src/main.cpp"
