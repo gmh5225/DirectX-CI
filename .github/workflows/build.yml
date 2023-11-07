@@ -12,40 +12,11 @@ jobs:
     env:
       BUILD_TYPE: Release
     steps:
-    
-    - name: Run as admin
-      run: |
-        $psCommand = 'Start-Process ' + "`"${env:GITHUB_ACTION}`"" + ' -Verb RunAs'
-        Start-Process powershell -Verb RunAs -ArgumentList 'Invoke-Expression', $psCommand
-        Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-      shell: powershell
-      
-    - name: Install DirectX SDK
-      shell: powershell
-      if: steps.cache.outputs.cache-hit != 'true'
-      run: |
-          choco install directx-sdk -y
-          Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
           
-    - name: Cache DirectX SDK
-      uses: actions/cache@v3
-      with:
-          path: DXSDK_Jun10.exe
-          key: ${{ runner.os }}-DXSDK_Jun10
-    - name: Download DirectX SDK
-      if: steps.cache.outputs.cache-hit != 'true'
-      run: |
-          Invoke-WebRequest 'https://download.microsoft.com/download/a/e/7/ae743f1f-632b-4809-87a9-aa1bb3458e31/DXSDK_Jun10.exe' -OutFile DXSDK_Jun10.exe
-      
     - name: Install DXSDK
       run: |
-        Start-Process -FilePath ./DXSDK_Jun10.exe -ArgumentList '/silent' -Wait
-      shell: powershell
-      
-    - name: List DXSDK files
-      run: dir /b "${{ github.workspace }}\\DX_SDK"
-      shell: powershell
-      
+        git clone https://github.com/gmh5225/DX9-lib
+        
     - name: Checkout Repo
       uses: actions/checkout@v3
       
