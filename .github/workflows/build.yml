@@ -39,10 +39,7 @@ jobs:
       
     - name: Install DXSDK
       run: |
-        $installPath = "${{ github.workspace }}\\DX_SDK"
-        New-Item -ItemType Directory -Path $installPath -Force | Out-Null
-        $exePath = Join-Path $installPath "DXSDK_Jun10.exe"
-        Start-Process -FilePath $exePath -ArgumentList '/silent' -Wait
+        Start-Process -FilePath ./DXSDK_Jun10.exe -ArgumentList '/silent' -Wait
       shell: powershell
       
     - name: List DXSDK files
