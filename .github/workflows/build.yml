@@ -15,7 +15,7 @@ jobs:
           
     - name: Install DXSDK
       run: |
-        git clone https://github.com/gmh5225/DX_SDK
+        git clone https://github.com/gmh5225/DX_SDK "${{ github.workspace }}\DX_SDK"
         
     - name: Checkout Repo
       uses: actions/checkout@v3
