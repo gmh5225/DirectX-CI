@@ -28,6 +28,7 @@ project(cmkr_for_beginners)
 
 # Target: hello_world
 set(CMKR_TARGET hello_world)
+message(STATUS "DXSDK_DIR at: ${DXSDK_DIR}")
 find_path(DXSDK_INCLUDE_DIR d3d9.h PATHS "${DXSDK_DIR}/Include")
 if (NOT DXSDK_INCLUDE_DIR)
     message(FATAL_ERROR "DirectX SDK is not installed. Please install the DirectX SDK and set the DXSDK_DIR environment variable.")
