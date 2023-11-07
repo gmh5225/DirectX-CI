@@ -15,13 +15,12 @@ jobs:
           
     - name: Install DXSDK
       run: |
-        git clone https://github.com/gmh5225/DX9-lib
+        git clone https://github.com/gmh5225/DX_SDK
         
     - name: Checkout Repo
       uses: actions/checkout@v3
       
     - name: Build
       run: |
-        cmake -B build -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
-        cmake --build build --config ${{ env.BUILD_TYPE }} --parallel
+        cmake -B build -DDXSDK_DIR="${{ github.workspace }}\DX_SDK" -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
         
